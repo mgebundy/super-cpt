@@ -299,7 +299,7 @@ class Super_Custom_Post_Meta {
 			echo SCPT_Markup::tag( 'label', array(
 					'for' => 'scpt_meta_' . $field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-text label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo SCPT_Markup::tag( 'input', array_merge( array(
 				'type' => $field['type'],
 				'value' => ( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : $field['default'] ),
@@ -325,7 +325,7 @@ class Super_Custom_Post_Meta {
 			echo SCPT_Markup::tag( 'label', array(
 					'for' => 'scpt_meta_' . $field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-textarea label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo SCPT_Markup::tag(
 			'textarea',
 			array_merge( array(
@@ -362,7 +362,7 @@ class Super_Custom_Post_Meta {
 			echo SCPT_Markup::tag( 'label', array(
 					'for' => 'scpt_meta_' . $field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		wp_editor(
 			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : $field['default'] ),
 			$field['meta_key'],
@@ -410,7 +410,7 @@ class Super_Custom_Post_Meta {
 			SCPT_Markup::tag( 'label', array(
 				'for' => $args['id'],
 				'class' => 'scpt-meta-label choice scpt-meta-checkbox label-' . $field['meta_key']
-			), SCPT_Markup::tag( 'input', $args ) . ' ' . $field['label'] );
+			), SCPT_Markup::tag( 'input', $args ) . ' ' . esc_html($field['label']) );
 	}
 
 
@@ -441,7 +441,7 @@ class Super_Custom_Post_Meta {
 		if ( false !== $field['label'] )
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-checkbox label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input', $field['default'] ) ) . '</span>';
 	}
 
@@ -473,7 +473,7 @@ class Super_Custom_Post_Meta {
 		if ( false !== $field['label'] )
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-radio label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input', $field['default'] ) ) . '</span>';
 	}
 
@@ -498,7 +498,7 @@ class Super_Custom_Post_Meta {
 		if ( false !== $field['label'] )
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-select label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo SCPT_Markup::tag( 'select', array_merge( array(
 				'name' => $field['meta_key'] . ( isset( $html_attributes['multiple'] ) ? '[]' : '' ),
 				'class' => 'scpt-field',
@@ -536,14 +536,14 @@ class Super_Custom_Post_Meta {
 		if ( false !== $field['label'] )
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-select label-' . $field['meta_key']
-				), $field['label'] );
+				), esc_html($field['label']) );
 		echo SCPT_Markup::tag( 'div', array( 'class' => 'scpt-media-preview' ), $preview );
 		echo SCPT_Markup::tag( 'p', '',
 			SCPT_Markup::tag( 'a', array_merge( array(
 			'href'  => '#',
 			'class' => 'scpt-add-media',
 			'style' => ( $value ? 'display:none' : '' )
-			), $html_attributes ), sprintf( __( 'Set %s', 'super-cpt' ), $field['label'] ) )
+			), $html_attributes ), sprintf( __( 'Set %s', 'super-cpt' ), esc_html($field['label']) ) )
 		);
 		echo SCPT_Markup::tag( 'input', array(
 			'type'  => 'hidden',
