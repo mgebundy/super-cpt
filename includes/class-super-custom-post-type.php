@@ -96,44 +96,45 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
 		}
 
-		$this->cpt = array_replace_recursive(
-			apply_filters( 'scpt_plugin_default_cpt_options', array(
-				'label' => $this->plural,
-				'labels' => array(
-					'name'               => _x( $this->plural, $this->type ),
-					'singular_name'      => _x( $this->singular, $this->type ),
-					'add_new'            => _x( 'New ' . $this->singular, $this->type ),
-					'add_new_item'       => _x( 'Add New ' . $this->singular, $this->type ),
-					'edit_item'          => _x( 'Edit ' . $this->singular, $this->type ),
-					'new_item'           => _x( 'New ' . $this->singular, $this->type ),
-					'view_item'          => _x( 'View ' . $this->singular, $this->type ),
-					'search_items'       => _x( 'Search ' . $this->plural, $this->type ),
-					'not_found'          => _x( 'No ' . $this->plural . ' found', $this->type ),
-					'not_found_in_trash' => _x( 'No ' . $this->plural . ' found in Trash', $this->type ),
-					'parent_item_colon'  => _x( 'Parent ' . $this->singular . ':', $this->type ),
-				),
-				'description'         => $this->plural,
-				'public'              => true,
-				'menu_position'       => 5, # => Below posts
-				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'excerpt', 'page-attributes' ),
-				'has_archive'         => true,
-				'menu_icon'           => $this->icon ? $this->icon : false,
-				'taxonomies'          => array(),
-				# These are other values mentioned for reference, but WP's defaults are sufficient
-				# 'exclude_from_search' => opposite of 'public'
-				# 'publicly_queryable'  => {value of public},
-				# 'show_ui'             => {value of public},
-				# 'show_in_nav_menus'   => {value of public},
-				# 'show_in_menu'        => {value of show_ui},
-				# 'show_in_admin_bar'   => {value of show_in_menu}
-				# 'capability_type'     => 'post',
-				# 'hierarchical'        => false,
-				# 'rewrite'             => true,
-				# 'query_var'           => true,
-				# 'can_export'          => true,
-			), $this->type ),
-			$customizations
-		);
+		$defaults = apply_filters( 'scpt_plugin_default_cpt_options', array(
+			'label' => $this->plural,
+			'labels' => array(
+				'name'               => _x( $this->plural, $this->type ),
+				'singular_name'      => _x( $this->singular, $this->type ),
+				'add_new'            => _x( 'New ' . $this->singular, $this->type ),
+				'add_new_item'       => _x( 'Add New ' . $this->singular, $this->type ),
+				'edit_item'          => _x( 'Edit ' . $this->singular, $this->type ),
+				'new_item'           => _x( 'New ' . $this->singular, $this->type ),
+				'view_item'          => _x( 'View ' . $this->singular, $this->type ),
+				'search_items'       => _x( 'Search ' . $this->plural, $this->type ),
+				'not_found'          => _x( 'No ' . $this->plural . ' found', $this->type ),
+				'not_found_in_trash' => _x( 'No ' . $this->plural . ' found in Trash', $this->type ),
+				'parent_item_colon'  => _x( 'Parent ' . $this->singular . ':', $this->type ),
+			),
+			'description'         => $this->plural,
+			'public'              => true,
+			'menu_position'       => 5, # => Below posts
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'excerpt', 'page-attributes' ),
+			'has_archive'         => true,
+			'menu_icon'           => $this->icon ? $this->icon : false,
+			'taxonomies'          => array(),
+			# These are other values mentioned for reference, but WP's defaults are sufficient
+			# 'exclude_from_search' => opposite of 'public'
+			# 'publicly_queryable'  => {value of public},
+			# 'show_ui'             => {value of public},
+			# 'show_in_nav_menus'   => {value of public},
+			# 'show_in_menu'        => {value of show_ui},
+			# 'show_in_admin_bar'   => {value of show_in_menu}
+			# 'capability_type'     => 'post',
+			# 'hierarchical'        => false,
+			# 'rewrite'             => true,
+			# 'query_var'           => true,
+			# 'can_export'          => true,
+		), $this->type );
+
+		$this->cpt = array_merge($defaults, $customizations);
+
+		$this->cpt['labels'] = array_merge($defaults['labels'], (array)$customizations['labels']);
 
 		$this->register_cpt_action();
 	}
